@@ -17,6 +17,18 @@ class EyIntegrationTestHelper
     chronatog_base_url = "#{base_url}/"
     @app ||= Rack::Builder.new do
       use DocHelper::RequestLogger
+      if ENV["DEBUG"]
+        require 'request_visualizer'
+        use RequestVisualizer do |str|
+          if str.match("https://cloud.engineyard.com/")
+            "AWSM"
+          elsif str.match("http")
+            "Chronatog"
+          else
+            str
+          end
+        end
+      end
       map chronatog_base_url do
         run Chronatog::EyIntegration.app
       end
@@ -38,6 +50,16 @@ class EyIntegrationTestHelper
     Chronatog::EyIntegration.save_creds(auth_id, auth_key)
     Chronatog::EyIntegration.connection.backend = Rack::Builder.new do
       use DocHelper::RequestLogger
+      if ENV["DEBUG"]
+        require 'request_visualizer'
+        use RequestVisualizer do |str|
+          if str.match("http")
+            "Tresfiestas"
+          else
+            str
+          end
+        end
+      end
       map "#{tresfiestas_url}/" do
         run tresfiestas_rackapp
       end
