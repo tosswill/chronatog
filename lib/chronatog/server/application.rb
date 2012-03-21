@@ -17,6 +17,11 @@ module Chronatog
         "Agree to our terms, or else..."
       end
 
+      get "/billall" do
+        Chronatog::Server::Customer.all.each(&:bill!)
+        
+      end
+      
       ##################
       # Actual Service #
       ##################
