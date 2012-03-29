@@ -16,6 +16,11 @@ module Chronatog
       get "/terms" do
         "Agree to our terms, or else..."
       end
+      
+      get '/customers' do
+        @customers = Chronatog::Server::Customer.all
+        haml :customer_list
+      end
 
       get "/billall" do
         Chronatog::Server::Customer.all.each(&:bill!)
