@@ -34,6 +34,7 @@ module Chronatog
           
           line_item_description = params[:body] 
           amount = params[:amount]
+          amount = amount.to_i if amount
         
           invoice = EY::ServicesAPI::Invoice.new(:total_amount_cents => amount,
                                                :line_item_description => line_item_description)
