@@ -1,17 +1,8 @@
 %h1
     Customers
-%table
+%ul
 - @customers.each do |cust|
-    %tr
-        %td
-            = cust.id
-        %td
-            = cust.name
-        %td
-            = cust.plan_type
-        %td
-            = cust.last_billed_at
-        %td
-            = cust.invoices_url
-        
+    %li
+        %a{ :href => '/customers/' + cust.id.to_s}
+            = cust.name || 'blank'
         

@@ -1,7 +1,9 @@
-= @customer.to_json
+
 %h1
     = @customer.name
-	
+%p
+    last billed: 
+    = @customer.last_billed_at
 %h2 
     New Bill
 
