@@ -1,15 +1,17 @@
 %h1
-	Customers
+    Customers
 %table
 - @customers.each do |cust|
-	%tr
-		%td
-			= cust.name
-		%td
-			= cust.plan_type
-		%td
-			= cust.last_billed_at
-		%td
-			= cust.invoices_url
-		
-		
+    %tr
+        %td
+            = cust.id
+        %td
+            = cust.name
+        %td
+            = cust.plan_type
+        %td
+            = cust.last_billed_at
+        %td
+            = cust.invoices_url
+        
+        
