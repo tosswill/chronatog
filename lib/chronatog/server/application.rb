@@ -21,6 +21,45 @@ module Chronatog
         @customers = Chronatog::Server::Customer.all
         haml :customer_list
       end
+      
+      get '/customers/:id' do
+         @customer = Chronatog::Server::Customer.find(params[:id])
+          haml :show
+      end
+      
+      post '/customers/:id/bill' do
+        
+        @customer = Chronatog::Server::Customer.find(params[:id])
+        if @customer
+          
+          line_item_description = params[:body] 
+          amount = params[:amount]
+        
+          invoice = EY::ServicesAPI::Invoice.new(:total_amount_cents => amount,
+                                               :line_item_description => line_item_description)
+          
+          Chronatog::EyIntegration.connection.send_invoice(@customer.invoices_url, invoice)
+          
+          @customer.last_billed_at = billing_at
+          redirect_to '/customers/' + @customer.id
+        end
+      end
+          
+      
+      get '/billit' do
+         
+            line_item_description = [
+              "For service from #{last_billed_at.strftime('%Y/%m/%d')}",
+              "to #{billing_at.strftime('%Y/%m/%d')}",
+              "includes #{schedulers.size} schedulers", 
+              "and #{total_jobs_ran} jobs run.",
+            ].join(" ")
+
+            
+            
+
+            self.last_billed_at = billing_at
+      end
 
       get "/billall" do
         Chronatog::Server::Customer.all.each(&:bill!)
