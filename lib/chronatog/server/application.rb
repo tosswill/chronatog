@@ -41,7 +41,7 @@ module Chronatog
           
           Chronatog::EyIntegration.connection.send_invoice(@customer.invoices_url, invoice)
           
-          @customer.last_billed_at = billing_at
+          @customer.last_billed_at = Time.now
           redirect_to '/customers/' + @customer.id
         end
       end
