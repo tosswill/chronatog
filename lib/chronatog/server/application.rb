@@ -42,25 +42,11 @@ module Chronatog
           Chronatog::EyIntegration.connection.send_invoice(@customer.invoices_url, invoice)
           
           @customer.last_billed_at = Time.now
-          redirect_to '/customers/' + @customer.id.to_s
+          redirect '/customers/' + @customer.id.to_s
         end
       end
           
       
-      get '/billit' do
-         
-            line_item_description = [
-              "For service from #{last_billed_at.strftime('%Y/%m/%d')}",
-              "to #{billing_at.strftime('%Y/%m/%d')}",
-              "includes #{schedulers.size} schedulers", 
-              "and #{total_jobs_ran} jobs run.",
-            ].join(" ")
-
-            
-            
-
-            self.last_billed_at = billing_at
-      end
 
       get "/billall" do
         Chronatog::Server::Customer.all.each(&:bill!)
