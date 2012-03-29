@@ -9,5 +9,7 @@ end
 $:.unshift File.expand_path("../lib", __FILE__)
 require 'chronatog/ey_integration'
 
+use Rack::ShowExceptions
+
 Chronatog::EyIntegration.setup!
 run Chronatog::EyIntegration.app
