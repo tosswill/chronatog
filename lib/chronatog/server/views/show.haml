@@ -8,10 +8,19 @@
     New Bill
 
 %form{:action => "/customers/#{@customer.id}/bill", :method => "post"}
-    Description
-    %input{:name => "body", :type => "text"}/
-    %br/
-    amount
-    %input{:name => "amount", :type => "text"}/
-    %br/
-    %input{:type => "submit", :value => "Submit"}/
+    %table
+        %tr
+            %td
+                Amount in cents
+            %td
+                %input{:name => "amount", :type => "text"}
+    
+        %tr
+            %td
+                Description
+            %td
+                %textarea{:name => "body", :type => "text"}
+        %tr
+            %td
+            %td
+                %input{:type => "submit", :value => "Submit"}
